@@ -404,27 +404,20 @@ section {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  filter: brightness(0.85) contrast(1.08);
-  transition: filter var(--transition-md);
-}
-
-.hero__photo:hover {
-  filter: brightness(0.92) contrast(1.05);
+  /* Sin filter en el contenedor: evita el bug de border-radius + overflow
+     que dejaba los bordes sin cubrir. La oscuridad la maneja el ::after. */
 }
 
 .hero__photo::after {
   content: '';
   position: absolute;
   inset: 0;
-  /* Overlay doble: capa base + gradiente inferior.
-     La capa base (0.35) baja la legibilidad de detalles finos en toda la imagen.
-     El gradiente inferior llega a 0.75 para integrar con el fondo oscuro del site. */
   background: linear-gradient(
     to bottom,
-    rgba(10,10,10,0.35) 0%,
-    rgba(10,10,10,0.15) 40%,
-    rgba(10,10,10,0.15) 55%,
-    rgba(10,10,10,0.75) 100%
+    rgba(10,10,10,0.45) 0%,
+    rgba(10,10,10,0.25) 40%,
+    rgba(10,10,10,0.25) 55%,
+    rgba(10,10,10,0.82) 100%
   );
   pointer-events: none;
 }
