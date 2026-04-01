@@ -408,19 +408,6 @@ section {
      que dejaba los bordes sin cubrir. La oscuridad la maneja el ::after. */
 }
 
-.hero__photo::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(10,10,10,0.45) 0%,
-    rgba(10,10,10,0.25) 40%,
-    rgba(10,10,10,0.25) 55%,
-    rgba(10,10,10,0.82) 100%
-  );
-  pointer-events: none;
-}
 
 
 .hero__scroll-indicator {
