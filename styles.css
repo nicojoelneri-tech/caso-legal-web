@@ -401,11 +401,10 @@ section {
   align-self: stretch;
   min-height: 480px;
   /* background-image se inyecta via inline style en el HTML */
+  background-color: var(--color-bg);
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  /* Sin filter en el contenedor: evita el bug de border-radius + overflow
-     que dejaba los bordes sin cubrir. La oscuridad la maneja el ::after. */
 }
 
 
