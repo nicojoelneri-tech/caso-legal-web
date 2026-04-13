@@ -12,7 +12,9 @@
   <meta property="og:url" content="https://casolegal.com.ar" />
   <!-- PLACEHOLDER og:image: una vez publicado el sitio, reemplazar por URL absoluta de una imagen de 1200x630px (puede ser el logo sobre fondo oscuro) -->
   <meta property="og:image" content="https://casolegal.com.ar/Logo/logo chico.png" />
+  <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://casolegal.com.ar" />
+  <link rel="icon" href="/Logo/logo chico.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
@@ -27,6 +29,7 @@
     "description": "Estudio jurídico especializado en accidentes de tránsito y reclamos ante compañías de seguros",
     "url": "https://casolegal.com.ar",
     "telephone": "+54-11-3002-7028",
+    "priceRange": "Sin costo inicial — honorarios sobre resultado",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Bolívar 465",
@@ -35,9 +38,82 @@
       "addressCountry": "AR"
     },
     "openingHours": "Mo-Fr 08:00-18:00",
-    "areaServed": "Gran Buenos Aires, CABA",
+    "areaServed": [
+      {"@type": "City", "name": "Ramos Mejía"},
+      {"@type": "City", "name": "Buenos Aires"},
+      {"@type": "AdministrativeArea", "name": "Gran Buenos Aires"}
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Servicios legales en siniestros viales",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Reclamos por accidentes de auto"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Reclamos por accidentes de moto"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Accidentes en transporte público"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Peatones lesionados"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Reclamos ante aseguradoras"}}
+      ]
+    },
     "sameAs": [
       "https://share.google/JOAgmfqNT6yt0iKP3"
+    ]
+  }
+  </script>
+
+  <!-- Schema.org FAQPage — genera rich snippets en resultados de Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿La consulta tiene algún costo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. La consulta inicial es completamente gratuita y sin compromiso. Evaluamos tu caso, te explicamos si tenés posibilidades reales de reclamo y recién ahí decidís si querés seguir con nosotros."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué pasa si el seguro no responde o demora mucho?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "La demora o falta de respuesta de una aseguradora puede tener consecuencias legales para ellos. En Caso Legal sabemos cómo presionar dentro del marco legal para que la aseguradora responda y cumpla con sus obligaciones."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué necesito para iniciar un reclamo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Con los datos básicos del accidente alcanza para empezar: fecha, lugar, qué pasó y los datos del otro vehículo o empresa involucrada. Si tenés la denuncia policial o la del seguro, mejor, pero no es indispensable en esta etapa."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Dónde atienden?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "La sede principal está en Bolívar 465, Ramos Mejía, Buenos Aires. También se coordina atención en Palermo para quienes están en CABA. Para casos del conurbano o de otras zonas, las consultas y el seguimiento pueden hacerse de forma remota."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Y si ya hice la denuncia al seguro pero no llegué a nada?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Podemos tomar el caso en cualquier etapa del proceso. Que ya hayas hecho la denuncia no significa que el reclamo terminó: muchas veces es el punto de partida de la negociación real."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Tienen algún límite de tiempo para iniciar el reclamo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. La ley establece plazos de prescripción para los reclamos. Depende del tipo de caso, pero en general son entre 1 y 3 años desde el accidente. Es importante no esperar demasiado y consultar antes de que prescriba el plazo."
+        }
+      }
     ]
   }
   </script>
