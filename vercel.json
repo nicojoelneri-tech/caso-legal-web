@@ -2,5 +2,12 @@
   "framework": null,
   "buildCommand": null,
   "outputDirectory": ".",
-  "installCommand": null
+  "installCommand": null,
+  "redirects": [
+    {
+      "source": "https://www.casolegal.com.ar/:path*",
+      "destination": "https://casolegal.com.ar/:path*",
+      "permanent": true
+    }
+  ]
 }
