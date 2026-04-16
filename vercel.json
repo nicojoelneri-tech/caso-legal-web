@@ -3,11 +3,5 @@
   "buildCommand": null,
   "outputDirectory": ".",
   "installCommand": null,
-  "redirects": [
-    {
-      "source": "https://www.casolegal.com.ar/:path*",
-      "destination": "https://casolegal.com.ar/:path*",
-      "permanent": true
-    }
-  ]
+  "redirects": []
 }
