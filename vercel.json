@@ -3,5 +3,11 @@
   "buildCommand": null,
   "outputDirectory": ".",
   "installCommand": null,
-  "redirects": []
+  "redirects": [
+    {
+      "source": "/favicon.ico",
+      "destination": "/Logo/logo%20chico.png",
+      "permanent": true
+    }
+  ]
 }
