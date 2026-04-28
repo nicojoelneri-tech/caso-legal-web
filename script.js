@@ -150,3 +150,29 @@
 
   sections.forEach(function (section) { observer.observe(section); });
 })();
+
+
+// ——— CONVERSION TRACKING ———
+(function () {
+  if (typeof gtag !== 'function') return;
+
+  // Clicks en el filtro de precalificación
+  document.querySelectorAll('a[href*="consulta.casolegal.com.ar"]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      gtag('event', 'generate_lead', {
+        event_category: 'conversion',
+        event_label: 'filtro_precalificacion'
+      });
+    });
+  });
+
+  // Clicks en WhatsApp
+  document.querySelectorAll('a[href*="wa.me"]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      gtag('event', 'contact', {
+        event_category: 'conversion',
+        event_label: 'whatsapp'
+      });
+    });
+  });
+})();
