@@ -24,7 +24,8 @@
   <link rel="icon" href="/Logo/logo%20chico.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" /></noscript>
   <link rel="stylesheet" href="styles.css" />
   <!-- Schema.org LegalService -->
   <script type="application/ld+json">
@@ -149,6 +150,8 @@
           src="Logo/logo chico.png"
           alt="Caso Legal"
           class="navbar__logo-img"
+          width="693"
+          height="296"
           onerror="this.style.display='none';this.nextElementSibling.removeAttribute('hidden');"
         />
         <span class="logo-text" hidden aria-hidden="true">Caso<span class="logo-accent">Legal</span></span>
@@ -840,6 +843,9 @@
             src="Logo/logo chico.png"
             alt="Caso Legal"
             class="footer__logo-img"
+            width="693"
+            height="296"
+            loading="lazy"
             onerror="this.style.display='none';this.nextElementSibling.removeAttribute('hidden');"
           />
           <span class="logo-text" hidden aria-hidden="true">Caso<span class="logo-accent">Legal</span></span>
@@ -892,6 +898,6 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
