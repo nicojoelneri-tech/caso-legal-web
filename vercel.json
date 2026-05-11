@@ -5,6 +5,12 @@
   "installCommand": null,
   "redirects": [
     {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "caso-legal-web.vercel.app" }],
+      "destination": "https://casolegal.com.ar/$1",
+      "permanent": true
+    },
+    {
       "source": "/favicon.ico",
       "destination": "/Logo/logo%20chico.png",
       "permanent": true
