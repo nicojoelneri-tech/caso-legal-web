@@ -366,6 +366,13 @@ section {
   margin-bottom: 3rem;
 }
 
+.hero__urgency {
+  flex-basis: 100%;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin-top: -0.25rem;
+}
+
 .hero__trust {
   display: flex;
   align-items: center;
