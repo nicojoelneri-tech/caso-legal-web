@@ -161,6 +161,9 @@ section {
 }
 
 .section-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
   margin-bottom: 1rem;
 }
 
@@ -285,6 +288,7 @@ section {
    ============================================ */
 .hero {
   position: relative;
+  isolation: isolate;
   min-height: 100svh;
   display: flex;
   align-items: center;
@@ -293,25 +297,57 @@ section {
   background: var(--color-bg);
 }
 
-.hero__bg-grid {
+.hero__media { position: absolute; inset: 0; z-index: -3; }
+.hero__media img,
+.hero__media video {
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(rgba(245,197,24,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245,197,24,0.04) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black 0%, transparent 70%);
-  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Fundido de video diferido: el poster queda visible hasta que el
+   video realmente arranca a reproducirse (evita el "salto" al pasar
+   de la foto estática al primer frame en caliente). Aplica a los
+   hero con video y a cualquier media de fondo con la misma lógica. */
+.hero__media video,
+.g-hero__media video,
+.g-mirada__media video {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.hero__media video.is-playing,
+.g-hero__media video.is-playing,
+.g-mirada__media video.is-playing {
+  opacity: 1;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(ellipse 75% 85% at 50% 50%, rgba(10,10,10,0.78) 0%, rgba(10,10,10,0.92) 100%),
+    linear-gradient(to top, #0a0a0a 0%, transparent 28%);
 }
 
 .hero__inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
+  display: block;
   padding-top: 3rem;
   padding-bottom: 3rem;
 }
+
+/* Hero y "¿Te suena familiar?" centrados a pedido de Nico
+   (el resto de /personas/ conserva su alineación original). */
+.hero__content {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+.hero__subheadline { margin-left: auto; margin-right: auto; }
+.hero__ctas { justify-content: center; }
+.hero__trust { justify-content: center; }
 
 .hero__badge {
   display: inline-flex;
@@ -340,15 +376,22 @@ section {
 }
 
 .hero__headline {
+  font-family: var(--font-serif);
   font-size: clamp(2.8rem, 5.5vw, 4.5rem);
-  font-weight: 800;
+  font-weight: 400;
   line-height: 1.05;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   margin-bottom: 1.5rem;
 }
 .hero__headline em {
   display: block;
   font-family: var(--font-serif);
+  color: var(--color-yellow-light);
+}
+
+.problema__headline em,
+.section-title em {
+  color: var(--color-yellow-light);
 }
 
 .hero__subheadline {
@@ -398,24 +441,6 @@ section {
   background: var(--color-border);
 }
 
-/* Hero photo */
-.hero__photo {
-  position: relative;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  border: 1px solid var(--color-border);
-  box-shadow: 0 32px 64px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.04);
-  align-self: stretch;
-  min-height: 480px;
-  /* background-image se inyecta via inline style en el HTML */
-  background-color: var(--color-bg);
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
-
-
 .hero__scroll-indicator {
   position: absolute;
   bottom: 32px;
@@ -442,8 +467,15 @@ section {
   border-bottom: 1px solid var(--color-border);
 }
 
+/* Centrado a pedido de Nico, igual que el hero de arriba. */
+.problema__inner { text-align: center; }
+
 .problema__headline {
-  margin-bottom: 2.5rem;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  max-width: 640px;
+  margin: 0 auto 2.5rem;
   color: var(--color-text);
 }
 
@@ -462,6 +494,7 @@ section {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
+  text-align: left;
 }
 .problema__item p {
   font-size: 0.95rem;
@@ -477,6 +510,9 @@ section {
 .problema__conclusion {
   font-size: 1.05rem;
   color: var(--color-text-muted);
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .problema__conclusion strong {
   color: var(--color-text);
@@ -551,19 +587,17 @@ section {
 }
 
 .proceso__number {
-  font-size: 3.5rem;
-  font-weight: 800;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(245,197,24,0.3);
-  letter-spacing: -0.05em;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 2.6rem;
+  color: var(--color-yellow);
   line-height: 1;
   margin-bottom: 1.25rem;
-  font-family: var(--font-sans);
-  transition: -webkit-text-stroke var(--transition-md), color var(--transition-md);
+  transition: color var(--transition-md);
 }
 .proceso__step:hover .proceso__number {
-  color: var(--color-yellow);
-  -webkit-text-stroke: 1px var(--color-yellow);
+  color: var(--color-yellow-light);
 }
 
 .proceso__content h3 {
@@ -664,10 +698,11 @@ section {
 .nosotros__feature:hover { border-color: rgba(245,197,24,0.25); }
 
 .nosotros__feature-number {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
   font-size: 2.5rem;
-  font-weight: 800;
   color: var(--color-yellow);
-  letter-spacing: -0.04em;
   margin-bottom: 0.75rem;
 }
 .nosotros__feature-icon {
@@ -1271,15 +1306,6 @@ section {
 
   .navbar__links { gap: 1.25rem; }
 
-  .hero__inner {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    text-align: center;
-  }
-  .hero__subheadline { margin: 0 auto 2.5rem; }
-  .hero__ctas { justify-content: center; }
-  .hero__trust { justify-content: center; }
-  .hero__photo { min-height: 320px; align-self: auto; }
   .hero__scroll-indicator { display: none; }
 
   .servicios__grid { grid-template-columns: repeat(2, 1fr); }
@@ -1345,9 +1371,11 @@ section {
   h2 { font-size: clamp(1.5rem, 6vw, 2rem); }
 
   .hero { min-height: auto; padding-top: 56px; padding-bottom: 60px; }
+  .hero::before {
+    background: linear-gradient(180deg, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.82) 100%);
+  }
   .hero__ctas { flex-direction: column; }
   .hero__ctas .btn { justify-content: center; }
-  .hero__photo { min-height: 260px; }
   .hero__trust { gap: 1rem; }
 
   .problema__grid { grid-template-columns: 1fr; }
@@ -1371,4 +1399,30 @@ section {
   .btn--lg { padding: 14px 24px; font-size: 0.95rem; }
   .hero__trust { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
   .trust-divider { display: none; }
+}
+
+/* ============================================
+   SELECTOR DE AUDIENCIA (Personas <-> Empresas)
+   ============================================ */
+.navbar__links a.nav-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid rgba(245,197,24,0.35);
+  border-radius: 100px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-yellow);
+  white-space: nowrap;
+  transition: background var(--transition), border-color var(--transition);
+}
+.navbar__links a.nav-switch:hover {
+  background: rgba(245,197,24,0.1);
+  border-color: var(--color-yellow);
+  color: var(--color-yellow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__media video { display: none; }
 }

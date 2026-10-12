@@ -1,0 +1,802 @@
+/* ============================================
+   CASO LEGAL GROUP — HOJA COMPARTIDA (home + empresas)
+   Se carga DESPUÉS de /styles.css y reutiliza sus tokens
+   (negro + dorado, Inter + DM Serif Display).
+   Recursos de marca: regla dorada, renglones de expediente,
+   eyebrow, bloque de cita, checklist, numeración serif itálica,
+   botón pill y chip de estado (ver "Sistema de Marca").
+   ============================================ */
+
+:root {
+  --g-ink: #14151a;
+  --g-line: rgba(245, 197, 24, 0.12);
+  --g-gold-soft: rgba(245, 197, 24, 0.3);
+}
+
+/* ——— Logo CL Group en navbar / footer ——— */
+.navbar__logo-img--group { height: 54px; width: auto; }
+.footer__logo-img--group { height: 64px; width: auto; margin-bottom: 1.25rem; }
+
+/* ——— Recursos de marca ——— */
+.g-eyebrow {
+  display: inline-block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-yellow);
+  margin-bottom: 1.25rem;
+}
+.g-eyebrow--pill {
+  border: 1px solid var(--g-gold-soft);
+  padding: 6px 14px;
+  border-radius: 100px;
+  letter-spacing: 0.16em;
+}
+
+.g-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  font-size: clamp(2rem, 4.2vw, 3.2rem);
+}
+.g-title em { font-style: italic; color: var(--color-yellow-light); }
+
+.g-rule {
+  display: block;
+  width: 180px;
+  height: 2px;
+  border: 0;
+  background: linear-gradient(to right, var(--color-yellow), transparent);
+  margin: 1.75rem 0;
+}
+.g-rule--center {
+  margin-left: auto;
+  margin-right: auto;
+  background: linear-gradient(to right, transparent, var(--color-yellow), transparent);
+}
+
+.g-lead {
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: var(--color-text-muted);
+  max-width: 560px;
+}
+
+/* Botón pill (un solo llamado principal por bloque) */
+.btn--pill {
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  font-size: 0.85rem;
+  box-shadow: 0 0 30px rgba(245, 197, 24, 0.18);
+}
+.btn--pill.btn--lg { padding: 16px 34px; }
+
+/* Chip de estado */
+.g-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--color-text);
+}
+.g-chip i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-yellow);
+  box-shadow: 0 0 10px rgba(245, 197, 24, 0.7);
+  display: inline-block;
+}
+
+/* Numeración de índice: serif itálica dorada */
+.g-num {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--color-yellow);
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+/* ============================================
+   HOME — SELECTOR
+   ============================================ */
+.g-home {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: 120px 0 80px;
+  background: var(--color-bg);
+  overflow: hidden;
+}
+/* Fondo fotográfico oscuro (Puerto Madero al atardecer) */
+.g-home__bg { position: absolute; inset: 0; z-index: -3; }
+.g-home__bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+.g-home__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0) 22%),
+    linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0) 30%),
+    linear-gradient(90deg, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.6) 30%, rgba(10,10,10,0.6) 70%, rgba(10,10,10,0.82) 100%);
+}
+.g-home__head { max-width: 780px; margin-bottom: 3.25rem; }
+.g-home__head .g-title { font-size: clamp(2.4rem, 5.6vw, 4.4rem); }
+.g-home__head .g-lead { margin-top: 0; color: #b9b9b9; }
+
+.aud-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.aud-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2.25rem;
+  background: rgba(20, 20, 20, 0.58);
+  -webkit-backdrop-filter: blur(14px);
+          backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  transition: border-color var(--transition-md), transform var(--transition-md), box-shadow var(--transition-md);
+}
+.aud-card:hover,
+.aud-card:focus-visible {
+  border-color: rgba(245, 197, 24, 0.45);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-yellow);
+}
+.aud-card--featured {
+  background: linear-gradient(145deg, rgba(245, 197, 24, 0.16), rgba(245, 197, 24, 0.04) 60%), rgba(20, 20, 20, 0.58);
+  border-color: rgba(245, 197, 24, 0.32);
+}
+.aud-card__tag {
+  align-self: flex-start;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(245, 197, 24, 0.14);
+  color: var(--color-yellow-light);
+}
+.aud-card__tag--muted { background: rgba(255,255,255,0.07); color: var(--color-text-muted); }
+
+/* En celular y tablet los envoltorios no existen: todo se ve como siempre */
+.aud-card__word { display: none; }
+.aud-card__more,
+.aud-card__more-inner { display: contents; }
+
+.aud-card h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 2.6vw, 2.15rem);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+.aud-card h2 em { font-style: italic; color: var(--color-yellow-light); }
+.aud-card p { color: #a9a9a9; font-size: 0.98rem; line-height: 1.7; }
+.aud-card ul { display: flex; flex-direction: column; gap: 0.5rem; margin: 0.25rem 0 0.5rem; }
+.aud-card li {
+  position: relative;
+  padding-left: 1.4rem;
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+.aud-card li::before { content: "—"; position: absolute; left: 0; color: var(--color-yellow); }
+.aud-card__cta {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-yellow);
+  padding-top: 0.75rem;
+}
+.aud-card__cta svg { transition: transform var(--transition); }
+.aud-card:hover .aud-card__cta svg { transform: translateX(4px); }
+
+/* ============================================================
+   SOLO PC (pantalla ancha + mouse): se ve la palabra y, al pasar
+   el puntero, se despliega la descripción con animación suave.
+   Celulares, tablets y pantallas táctiles NO entran acá.
+   ============================================================ */
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .g-home { padding: 96px 0 40px; }
+  .g-home__head { max-width: 1000px; margin-bottom: 1.75rem; }
+  .g-home__head .g-title { font-size: clamp(2.4rem, 4vw, 3.5rem); }
+  .g-home__head .g-lead { max-width: 720px; }
+
+  .aud-grid { --ease-out: cubic-bezier(0.22, 1, 0.36, 1); }
+
+  /* En reposo: solo las palabras sobre el fondo (sin marco, sin vidrio).
+     Al pasar el mouse aparece un panel oscuro suave con la descripción. */
+  .aud-card {
+    height: 450px;
+    justify-content: center;
+    gap: 0;
+    padding: 2rem 2.75rem;
+    overflow: hidden;
+    background: rgba(14, 14, 14, 0);
+    border-color: transparent;
+    -webkit-backdrop-filter: blur(0px);
+            backdrop-filter: blur(0px);
+    box-shadow: none;
+    transition:
+      background 0.6s var(--ease-out),
+      border-color 0.6s var(--ease-out),
+      transform 0.6s var(--ease-out),
+      box-shadow 0.6s var(--ease-out),
+      -webkit-backdrop-filter 0.6s var(--ease-out),
+      backdrop-filter 0.6s var(--ease-out),
+      opacity 0.5s ease;
+  }
+  .aud-card:hover,
+  .aud-card:focus-visible,
+  .aud-card:focus-within {
+    background: rgba(14, 14, 14, 0.8);
+    border-color: rgba(245, 197, 24, 0.4);
+    -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+  }
+  .aud-card--featured,
+  .aud-card--featured:hover,
+  .aud-card--featured:focus-visible,
+  .aud-card--featured:focus-within { background-image: none; }
+
+  /* la otra tarjeta baja de intensidad mientras miras una */
+  .aud-grid:has(.aud-card:hover) .aud-card:not(:hover) { opacity: 0.45; }
+
+  /* la etiqueta también aparece con el hover (colapsada en reposo para que la palabra quede centrada) */
+  .aud-card__tag {
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition:
+      max-height 0.6s var(--ease-out),
+      margin-bottom 0.6s var(--ease-out),
+      padding 0.6s var(--ease-out),
+      opacity 0.45s ease;
+  }
+  .aud-card:hover .aud-card__tag,
+  .aud-card:focus-visible .aud-card__tag,
+  .aud-card:focus-within .aud-card__tag {
+    max-height: 2rem;
+    margin-bottom: 1.1rem;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    opacity: 1;
+    transition-delay: 0s, 0s, 0s, 0.1s;
+  }
+
+  .aud-card__word {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--font-serif);
+    font-size: clamp(3.2rem, 5vw, 4.6rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #fff;
+    text-shadow: 0 2px 30px rgba(0, 0, 0, 0.75), 0 0 8px rgba(0, 0, 0, 0.45);
+    transition: color 0.5s ease;
+  }
+  .aud-card__word svg {
+    flex-shrink: 0;
+    color: var(--color-yellow);
+    opacity: 0;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+    transition: transform 0.6s var(--ease-out), opacity 0.4s ease;
+  }
+  .aud-card:hover .aud-card__word svg { opacity: 1; transform: translateX(6px); }
+  .aud-card:hover .aud-card__word { color: var(--color-yellow-light); }
+
+  /* descripción: se despliega y se pliega (altura animada con grid) */
+  .aud-card__more {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      grid-template-rows 0.7s var(--ease-out),
+      opacity 0.45s ease,
+      transform 0.7s var(--ease-out);
+  }
+  .aud-card__more-inner {
+    display: block;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .aud-card:hover .aud-card__more,
+  .aud-card:focus-visible .aud-card__more,
+  .aud-card:focus-within .aud-card__more {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0s, 0.08s, 0s;
+  }
+
+  .aud-card__more-inner > * { margin-top: 0; }
+  .aud-card h2 {
+    font-size: 1.3rem;
+    padding-top: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  .aud-card p { font-size: 0.93rem; line-height: 1.65; margin-bottom: 0.9rem; }
+  .aud-card ul { margin: 0 0 1rem; gap: 0.4rem; }
+  .aud-card li { font-size: 0.88rem; }
+  .aud-card__cta { padding-top: 0; }
+}
+
+@media (min-width: 1025px) and (max-width: 1260px) and (hover: hover) and (pointer: fine) {
+  .aud-card { height: 500px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aud-card,
+  .aud-card__more,
+  .aud-card__word svg { transition-duration: 0.01ms !important; transition-delay: 0s !important; }
+}
+
+/* Franja "una misma mirada" */
+.g-about { background: var(--color-bg-2); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+.g-about__inner {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+.g-about p { color: var(--color-text-muted); line-height: 1.8; margin-bottom: 1rem; }
+.g-about p strong { color: var(--color-text); font-weight: 600; }
+.g-stats { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+.g-stat {
+  padding: 1.25rem 1.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 2px solid var(--color-yellow);
+  border-radius: var(--radius-md);
+}
+.g-stat strong { display: block; font-family: var(--font-serif); font-weight: 400; font-size: 1.7rem; }
+.g-stat span { font-size: 0.85rem; color: var(--color-text-muted); }
+
+/* ============================================
+   EMPRESAS — HERO con video
+   ============================================ */
+.g-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: 120px 0 90px;
+  background: var(--color-bg);
+  overflow: hidden;
+}
+.g-hero > .container,
+.g-home > .container { width: 100%; }
+.g-hero__media { position: absolute; inset: 0; z-index: -3; }
+.g-hero__media img,
+.g-hero__media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.g-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(ellipse 75% 85% at 50% 50%, rgba(10,10,10,0.8) 0%, rgba(10,10,10,0.92) 100%),
+    linear-gradient(to top, #0a0a0a 0%, transparent 28%);
+}
+.g-hero__content { max-width: 780px; }
+.g-hero .g-title { font-size: clamp(2.6rem, 6vw, 4.8rem); }
+.g-hero__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin: 2.25rem 0 2.5rem; }
+.g-link {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--g-gold-soft);
+  padding-bottom: 2px;
+  transition: color var(--transition), border-color var(--transition);
+}
+.g-link:hover { color: var(--color-yellow); border-color: var(--color-yellow); }
+.g-hero__quote {
+  max-width: 520px;
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--color-yellow);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--color-text);
+}
+
+/* ============================================
+   EMPRESAS — FRASES + NARRATIVA
+   ============================================ */
+.g-frases { background: var(--color-bg-2); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+.g-frases__head { max-width: 760px; margin-bottom: 2.5rem; }
+.g-frases__head p { color: var(--color-text-muted); font-size: 1.05rem; margin-top: 1rem; }
+.g-quotes {
+  background: var(--g-ink);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem;
+  margin-bottom: 3rem;
+}
+.g-quotes__label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-yellow);
+  margin-bottom: 1.5rem;
+}
+.g-quotes__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem 2.5rem; }
+.g-quotes blockquote {
+  padding-left: 1.1rem;
+  border-left: 2px solid var(--color-yellow);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.45;
+  color: var(--color-text);
+}
+.g-prose { max-width: 760px; }
+.g-prose p { color: var(--color-text-muted); line-height: 1.85; margin-bottom: 1.15rem; font-size: 1.02rem; }
+.g-prose p strong { color: var(--color-text); font-weight: 600; }
+.g-closing {
+  text-align: center;
+  margin-top: 3.5rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  line-height: 1.35;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.g-closing em { color: var(--color-yellow); }
+
+/* ============================================
+   EMPRESAS — AUTODIAGNÓSTICO
+   ============================================ */
+.g-check { background: var(--color-bg); }
+.g-check__head { max-width: 720px; margin-bottom: 3rem; }
+.g-check__head p { color: var(--color-text-muted); font-size: 1.05rem; margin-top: 1rem; }
+.g-check__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem 3rem; }
+.g-check__group h3 {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-yellow);
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.chk {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  padding: 0.9rem 0.9rem;
+  margin: 0 -0.9rem 0.25rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.chk:hover { background: rgba(255,255,255,0.03); }
+.chk input { position: absolute; opacity: 0; pointer-events: none; }
+.chk__box {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 3px;
+  border: 1.5px solid var(--color-yellow);
+  border-radius: 5px;
+  position: relative;
+  transition: background var(--transition);
+}
+.chk__box::after {
+  content: "";
+  position: absolute;
+  left: 5px; top: 1px;
+  width: 6px; height: 11px;
+  border: solid #0a0a0a;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0);
+  transition: transform 0.15s ease;
+}
+.chk input:checked ~ .chk__box { background: var(--color-yellow); }
+.chk input:checked ~ .chk__box::after { transform: rotate(45deg) scale(1); }
+.chk input:focus-visible ~ .chk__box { outline: 2px solid var(--color-yellow); outline-offset: 3px; }
+.chk__body strong { display: block; font-size: 1rem; font-weight: 600; line-height: 1.4; color: var(--color-text); margin-bottom: 4px; }
+.chk__body small { display: block; font-size: 0.85rem; line-height: 1.6; color: var(--color-text-muted); }
+
+.g-check__summary {
+  margin-top: 3rem;
+  padding: 1.75rem 2rem;
+  background: var(--g-ink);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 2rem;
+  flex-wrap: wrap;
+}
+.g-check__summary p { max-width: 640px; color: var(--color-text-muted); line-height: 1.65; }
+.g-check__summary p strong { color: var(--color-text); }
+.g-check__summary.has-marks { border-color: rgba(245, 197, 24, 0.35); }
+
+/* ============================================
+   EMPRESAS — MEMBRESÍA
+   ============================================ */
+.g-membresia { background: var(--color-bg-2); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+.g-mem {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 4rem;
+  align-items: start;
+}
+.g-mem__intro p { color: var(--color-text-muted); line-height: 1.8; margin-top: 1.25rem; }
+.g-mem__features { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.g-feature {
+  padding: 1.75rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--transition);
+}
+.g-feature:hover { border-color: rgba(245, 197, 24, 0.3); }
+.g-feature .g-num { display: block; margin-bottom: 1rem; font-size: 1.9rem; }
+.g-feature p { font-size: 0.95rem; line-height: 1.7; color: var(--color-text); }
+.g-mem__note {
+  margin-top: 2rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px dashed var(--g-gold-soft);
+  border-radius: var(--radius-md);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+.g-mem__note strong { color: var(--color-text); }
+
+/* ============================================
+   EMPRESAS — PREVENIR Y RESOLVER (video)
+   ============================================ */
+.g-mirada { background: var(--color-bg); }
+.g-mirada__inner { display: grid; grid-template-columns: 1fr 1.1fr; gap: 4.5rem; align-items: center; }
+.g-mirada__media {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 32px 64px rgba(0,0,0,0.45);
+  aspect-ratio: 16 / 10;
+  background: var(--color-surface);
+}
+.g-mirada__media img,
+.g-mirada__media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.g-moments { display: flex; flex-direction: column; margin-top: 2rem; }
+.g-moment {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--color-border);
+}
+.g-moment:last-child { border-bottom: 1px solid var(--color-border); }
+.g-moment h3 { font-size: 1.05rem; margin-bottom: 4px; }
+.g-moment p { font-size: 0.92rem; color: var(--color-text-muted); line-height: 1.7; }
+.g-mirada__foot { margin-top: 1.5rem; color: var(--color-text-muted); line-height: 1.75; }
+
+/* ============================================
+   EMPRESAS — CÓMO EMPEZAMOS
+   ============================================ */
+.g-pasos { background: var(--color-bg-2); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+.g-pasos__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
+.g-paso {
+  padding: 2rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+.g-paso .g-num { display: block; margin-bottom: 1.25rem; font-size: 2.6rem; }
+.g-paso h3 { margin-bottom: 0.6rem; }
+.g-paso p { font-size: 0.92rem; color: var(--color-text-muted); line-height: 1.7; }
+
+/* ============================================
+   EMPRESAS — CIERRE / CONTACTO
+   ============================================ */
+.g-cierre { position: relative; isolation: isolate; background: var(--color-bg); text-align: center; overflow: hidden; }
+.g-cierre .g-title { max-width: 820px; margin: 0 auto; }
+.g-cierre p.g-lead { margin: 1.25rem auto 2.25rem; }
+.g-cierre__actions { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.g-cierre__phone { font-size: 0.9rem; color: var(--color-text-muted); }
+.g-cierre__phone a { color: var(--color-yellow); font-weight: 600; }
+.g-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  max-width: 900px;
+  margin: 4rem auto 0;
+  text-align: left;
+}
+.g-info__item {
+  padding: 1.25rem 1.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+.g-info__item strong { display: block; color: var(--color-text); font-size: 0.85rem; margin-bottom: 4px; }
+.g-info__item a { color: var(--color-yellow); }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+  .aud-grid { grid-template-columns: 1fr; }
+  .g-about__inner,
+  .g-mem,
+  .g-mirada__inner { grid-template-columns: 1fr; gap: 3rem; }
+  .g-mem__features { grid-template-columns: 1fr 1fr; }
+  .g-mirada__media { order: -1; }
+  .g-pasos__grid { grid-template-columns: 1fr; }
+  .g-info { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .navbar__logo-img--group { height: 38px; }
+  .footer__logo-img--group { height: 52px; }
+
+  .g-home { padding: 96px 0 56px; min-height: auto; }
+  .g-home__head { margin-bottom: 2.25rem; }
+  .aud-card { padding: 1.6rem; }
+
+  .g-hero { min-height: auto; padding: 104px 0 64px; }
+  .g-hero::before {
+    background:
+      linear-gradient(180deg, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.82) 100%);
+  }
+  .g-hero__ctas .btn { width: 100%; justify-content: center; }
+
+  .g-quotes { padding: 1.5rem; }
+  .g-quotes__grid { grid-template-columns: 1fr; }
+  .g-check__grid { grid-template-columns: 1fr; gap: 2rem; }
+  .g-check__summary { padding: 1.4rem; }
+  .g-check__summary .btn { width: 100%; justify-content: center; }
+  .g-mem__features { grid-template-columns: 1fr; }
+  .g-moment { grid-template-columns: 44px 1fr; }
+  .g-cierre .btn { width: 100%; justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .g-hero__media video,
+  .g-mirada__media video { display: none; }
+  .aud-card,
+  .aud-card__cta svg { transition: none; }
+}
+
+/* ============================================================
+   TODO CENTRADO (home + empresas)
+   Se activa con class="g-page" en <body>. /personas no la usa,
+   así que conserva su alineación original.
+   ============================================================ */
+.g-page main,
+.g-page .footer { text-align: center; }
+
+/* Regla dorada y textos con ancho máximo: siempre centrados */
+.g-page .g-rule {
+  margin-left: auto;
+  margin-right: auto;
+  background: linear-gradient(to right, transparent, var(--color-yellow), transparent);
+}
+.g-page .g-lead { margin-left: auto; margin-right: auto; }
+
+/* Home */
+.g-page .g-home__head { margin-left: auto; margin-right: auto; }
+.g-page .aud-card { text-align: center; align-items: center; }
+.g-page .aud-card__tag { align-self: center; }
+.g-page .aud-card__cta { align-self: center; }
+.g-page .aud-card li { padding-left: 0; }
+.g-page .aud-card li::before { position: static; margin-right: 0.55rem; }
+.g-page .aud-card ul { align-items: center; }
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .g-page .aud-card__word { justify-content: center; }
+  .g-page .aud-card__word svg { display: none; }
+  .g-page .aud-card__more { width: 100%; }
+}
+
+/* Franja "una misma mirada" (home) */
+.g-page .g-about__inner { grid-template-columns: 1fr; gap: 3rem; max-width: 820px; margin: 0 auto; }
+.g-page .g-stats { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.g-page .g-stat { border-left: 1px solid var(--color-border); border-top: 2px solid var(--color-yellow); }
+@media (max-width: 768px) { .g-page .g-stats { grid-template-columns: 1fr; } }
+
+/* Empresas — hero */
+.g-page .g-hero__content { margin: 0 auto; }
+.g-page .g-hero__ctas { justify-content: center; }
+.g-page .g-hero__quote {
+  margin: 0 auto;
+  padding-left: 0;
+  border-left: 0;
+}
+.g-page .g-hero__quote::before,
+.g-page .g-quotes blockquote::before {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--color-yellow);
+  margin: 0 auto 0.9rem;
+}
+
+/* Empresas — frases + narrativa */
+.g-page .g-frases__head,
+.g-page .g-check__head,
+.g-page .g-prose { margin-left: auto; margin-right: auto; }
+.g-page .g-quotes blockquote { padding-left: 0; border-left: 0; }
+
+/* Empresas — autodiagnóstico */
+.g-page .chk { flex-direction: column; align-items: center; gap: 0.6rem; }
+.g-page .chk__box { margin-top: 0; }
+.g-page .g-check__summary {
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.g-page .g-check__summary p { margin-left: auto; margin-right: auto; }
+
+/* Empresas — membresía */
+.g-page .g-mem { grid-template-columns: 1fr; gap: 3rem; }
+.g-page .g-mem__intro { max-width: 760px; margin: 0 auto; }
+.g-page .g-mem__features { max-width: 960px; margin: 0 auto; width: 100%; }
+.g-page .g-feature { text-align: center; }
+.g-page .g-mem__note { max-width: 760px; margin-left: auto; margin-right: auto; }
+
+/* Empresas — prevenir y resolver */
+.g-page .g-moment { grid-template-columns: 1fr; gap: 0.5rem; justify-items: center; }
+.g-page .g-moment .g-num { font-size: 1.8rem; }
+
+/* Empresas — cómo empezamos */
+.g-page .g-paso { text-align: center; }
+
+/* Preguntas frecuentes (compartido con /personas: acá solo bajo .g-page) */
+.g-page .faq__inner { grid-template-columns: 1fr; gap: 2.5rem; max-width: 820px; margin: 0 auto; }
+.g-page .faq-item__question { justify-content: center; text-align: center; }
+.g-page .faq-item__icon { margin-left: 0.25rem; }
+.g-page .faq-item__answer p { text-align: center; }
+
+/* Cierre */
+.g-page .g-info { text-align: center; }
+
+/* Footer */
+.g-page .footer__brand p { margin-left: auto; margin-right: auto; }
+.g-page .footer__logo-link { display: flex; justify-content: center; }
+.g-page .footer__logo-img { margin-left: auto; margin-right: auto; }
+.g-page .footer__links { align-items: center; }
+.g-page .footer__bottom .container { justify-content: center; text-align: center; }
