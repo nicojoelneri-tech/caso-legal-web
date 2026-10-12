@@ -79,6 +79,50 @@
 })();
 
 
+// ——— VIDEO DIFERIDO (respeta ahorro de datos y reduced motion) ———
+// Arranca apenas el DOM está listo (no espera a window "load", que
+// demoraba el inicio hasta que TODA la página —imágenes, fuentes,
+// etc.— terminara de cargar; eso hacía que el video de fondo del
+// hero recién empezara a bajar cuando el usuario ya lo estaba
+// mirando, y se notara el "tirón" del arranque en frío). El fundido
+// con la clase is-playing evita que el primer frame aparezca de golpe.
+(function () {
+  var videos = document.querySelectorAll('video[data-src]');
+  if (!videos.length) return;
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var saveData = navigator.connection && navigator.connection.saveData;
+  if (reduced || saveData) return;
+
+  function start(video) {
+    if (video.dataset.started) return;
+    video.dataset.started = '1';
+    video.addEventListener('playing', function onPlaying() {
+      video.classList.add('is-playing');
+      video.removeEventListener('playing', onPlaying);
+    });
+    var source = document.createElement('source');
+    source.src = video.getAttribute('data-src');
+    source.type = 'video/mp4';
+    video.appendChild(source);
+    video.load();
+    var p = video.play();
+    if (p && typeof p.catch === 'function') p.catch(function () {});
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { start(e.target); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '200px' });
+    videos.forEach(function (v) { io.observe(v); });
+  } else {
+    videos.forEach(start);
+  }
+})();
+
+
 // ——— FAQ ACCORDION ———
 (function () {
   const items = document.querySelectorAll('[data-faq]');
@@ -155,16 +199,14 @@
 // ——— CONVERSION TRACKING ———
 (function () {
   if (typeof gtag !== 'function') return;
+  // Las páginas de Caso Legal Group (home y /empresas) llevan este atributo
+  // y usan eventos propios (ver group.js) para no contaminar las conversiones de /personas.
+  if (document.body.hasAttribute('data-no-conversion-tracking')) return;
 
-  // Clicks en el filtro de precalificación
-  document.querySelectorAll('a[href*="consulta.casolegal.com.ar"]').forEach(function (el) {
-    el.addEventListener('click', function () {
-      gtag('event', 'generate_lead', {
-        event_category: 'conversion',
-        event_label: 'filtro_precalificacion'
-      });
-    });
-  });
+  // Nota: se sacó el tracking de "generate_lead" (filtro de precalificación /
+  // consulta.casolegal.com.ar) porque esa conexión se retiró del sitio — el
+  // contacto ahora va directo a WhatsApp. Si en Google Ads hay una acción de
+  // conversión "generate_lead" apuntando a este evento, dejará de recibir datos.
 
   // Clicks en WhatsApp
   document.querySelectorAll('a[href*="wa.me"]').forEach(function (el) {
