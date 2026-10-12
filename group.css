@@ -173,6 +173,9 @@
 
 /* En celular y tablet los envoltorios no existen: todo se ve como siempre */
 .aud-card__word { display: none; }
+.aud-card__tag-row,
+.aud-card__tag-inner,
+.aud-card__tag-gap,
 .aud-card__more,
 .aud-card__more-inner { display: contents; }
 
@@ -259,29 +262,46 @@
   /* la otra tarjeta baja de intensidad mientras miras una */
   .aud-grid:has(.aud-card:hover) .aud-card:not(:hover) { opacity: 0.45; }
 
-  /* la etiqueta también aparece con el hover (colapsada en reposo para que la palabra quede centrada) */
-  .aud-card__tag {
-    max-height: 0;
-    margin-bottom: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    opacity: 0;
+  /* la etiqueta también aparece con el hover (colapsada en reposo para que la palabra quede centrada).
+     Antes esto se animaba con un max-height fijo en rem, que en algunos
+     niveles de zoom del navegador quedaba mas chico que el texto real y lo
+     recortaba (se veia "comprimido" y el texto desaparecia). Ahora se anima
+     el alto de la fila con grid-template-rows (0fr -> 1fr), igual que la
+     descripcion de mas abajo: el alto siempre sale del contenido real, nunca
+     de un numero adivinado, asi que no puede volver a recortar el texto. */
+  .aud-card__tag-row {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.6s var(--ease-out);
+  }
+  .aud-card:hover .aud-card__tag-row,
+  .aud-card:focus-visible .aud-card__tag-row,
+  .aud-card:focus-within .aud-card__tag-row {
+    grid-template-rows: 1fr;
+  }
+  .aud-card__tag-inner {
+    display: block;
+    min-height: 0;
     overflow: hidden;
-    transition:
-      max-height 0.6s var(--ease-out),
-      margin-bottom 0.6s var(--ease-out),
-      padding 0.6s var(--ease-out),
-      opacity 0.45s ease;
+  }
+  /* el espacio antes de la palabra vive como padding-bottom de este wrapper
+     intermedio (sin fondo propio) y no de la etiqueta ni del wrapper con
+     overflow:hidden: ni el margin ni el padding del elemento que recorta se
+     recortan a si mismos al colapsar la fila, por eso antes la etiqueta no
+     desaparecia del todo en reposo */
+  .aud-card__tag-gap {
+    display: block;
+    padding-bottom: 1.1rem;
+  }
+  .aud-card__tag {
+    opacity: 0;
+    transition: opacity 0.45s ease;
   }
   .aud-card:hover .aud-card__tag,
   .aud-card:focus-visible .aud-card__tag,
   .aud-card:focus-within .aud-card__tag {
-    max-height: 2rem;
-    margin-bottom: 1.1rem;
-    padding-top: 4px;
-    padding-bottom: 4px;
     opacity: 1;
-    transition-delay: 0s, 0s, 0s, 0.1s;
+    transition-delay: 0.1s;
   }
 
   .aud-card__word {
